@@ -1,0 +1,2155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tranh Kim Hoàng — Stakeholder Review</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    :root {
+      --paper-red:        #C13B2A;
+      --paper-red-light:  #D4503E;
+      --paper-red-dark:   #8B2419;
+      --paper-yellow:     #C89A1A;
+      --paper-yellow-light: #D4A82B;
+      --ink-black:        #1A1008;
+      --ink-brown:        #3D2B1F;
+      --pigment-red:      #B5300A;
+      --pigment-yellow:   #D4A017;
+      --pigment-white:    #EDE8D8;
+      --pigment-indigo:   #2C3E6E;
+      --surface-wood:     #8B6340;
+      --surface-wood-light: #A07550;
+      --surface-paper:    #F5EDD8;
+      --doc-bg:           #FDFAF5;
+      --doc-border:       rgba(26,16,8,0.12);
+      --color-success:    #4A7C59;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background: var(--doc-bg);
+      color: var(--ink-black);
+      line-height: 1.7;
+    }
+
+    /* ── TOP NAV ─────────────────────────────────────────────── */
+    .topnav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--ink-black);
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+      border-bottom: 3px solid var(--paper-red);
+    }
+    .topnav::-webkit-scrollbar { display: none; }
+    .topnav-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem;
+      font-style: italic;
+      color: var(--pigment-white);
+      padding: 12px 20px;
+      white-space: nowrap;
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+    .topnav a {
+      color: rgba(237,232,216,0.7);
+      text-decoration: none;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 12px 16px;
+      white-space: nowrap;
+      transition: color 0.15s, background 0.15s;
+    }
+    .topnav a:hover { color: var(--pigment-white); background: rgba(193,59,42,0.3); }
+
+    /* ── HERO ──────────────────────────────────────────────────── */
+    .hero {
+      background: var(--paper-red);
+      background-image:
+        radial-gradient(ellipse at 80% 20%, rgba(212,80,62,0.6) 0%, transparent 60%),
+        radial-gradient(ellipse at 10% 80%, rgba(139,36,25,0.5) 0%, transparent 50%);
+      padding: 80px 48px 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231A1008' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .hero-content {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 48px;
+    }
+    .hero-text { flex: 1; }
+    .hero-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--pigment-yellow);
+      margin-bottom: 12px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 900;
+      color: var(--pigment-white);
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--pigment-yellow);
+    }
+    .hero-sub {
+      font-size: 1.05rem;
+      color: rgba(237,232,216,0.85);
+      margin-bottom: 28px;
+      max-width: 520px;
+      line-height: 1.6;
+    }
+    .hero-meta {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .hero-chip {
+      background: rgba(237,232,216,0.15);
+      border: 1px solid rgba(237,232,216,0.3);
+      border-radius: 4px;
+      padding: 6px 12px;
+      font-size: 0.75rem;
+      color: var(--pigment-white);
+      font-weight: 500;
+    }
+    .hero-pig {
+      width: 200px;
+      flex-shrink: 0;
+    }
+
+    /* ── MAIN LAYOUT ───────────────────────────────────────────── */
+    .main-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 32px 80px;
+    }
+
+    /* ── SECTIONS ──────────────────────────────────────────────── */
+    .section {
+      padding: 64px 0 48px;
+      border-bottom: 1px solid var(--doc-border);
+    }
+    .section:last-child { border-bottom: none; }
+
+    .section-eyebrow {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--paper-red);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      font-weight: 700;
+      color: var(--ink-black);
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+    .section-lead {
+      font-size: 1.05rem;
+      color: var(--ink-brown);
+      max-width: 660px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+
+    /* ── CALLOUT BOXES ─────────────────────────────────────────── */
+    .callout {
+      border-left: 4px solid var(--paper-red);
+      background: var(--surface-paper);
+      padding: 20px 24px;
+      border-radius: 0 8px 8px 0;
+      margin: 24px 0;
+    }
+    .callout.yellow { border-left-color: var(--paper-yellow); }
+    .callout.indigo { border-left-color: var(--pigment-indigo); }
+    .callout.green  { border-left-color: var(--color-success); }
+    .callout strong { color: var(--ink-black); }
+
+    /* ── CULTURE SECTION ───────────────────────────────────────── */
+    .culture-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 32px;
+    }
+    @media (max-width: 700px) { .culture-grid { grid-template-columns: 1fr; } }
+
+    .culture-card {
+      background: var(--surface-paper);
+      border: 2px solid var(--ink-black);
+      border-radius: 8px;
+      padding: 28px;
+      box-shadow: 4px 4px 0 var(--ink-black);
+    }
+    .culture-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+    }
+    .culture-card p { font-size: 0.9rem; line-height: 1.65; color: var(--ink-brown); }
+    .culture-card .tag {
+      display: inline-block;
+      background: var(--paper-red);
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 3px;
+      margin-bottom: 10px;
+    }
+    .culture-card .tag.yellow { background: var(--paper-yellow); color: var(--ink-black); }
+
+    .reference-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .ref-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--ink-black);
+      color: var(--pigment-white);
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 9px 16px;
+      border-radius: 5px;
+      transition: background 0.15s, transform 0.1s;
+      box-shadow: 2px 2px 0 var(--pigment-red);
+    }
+    .ref-link:hover { background: var(--paper-red); transform: translate(-1px,-1px); box-shadow: 3px 3px 0 var(--ink-black); }
+    .ref-link::before { content: '↗'; font-size: 0.85em; }
+
+    /* ── TECHNIQUE STEPS ───────────────────────────────────────── */
+    .technique-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin: 32px 0;
+    }
+    .step-card {
+      background: var(--ink-black);
+      color: var(--pigment-white);
+      padding: 24px 20px;
+      border-radius: 6px;
+      position: relative;
+    }
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: var(--paper-red);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .step-card h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; }
+    .step-card p { font-size: 0.8rem; color: rgba(237,232,216,0.75); line-height: 1.5; }
+
+    /* ── PROBLEM / USER GRID ───────────────────────────────────── */
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 32px;
+    }
+    @media (max-width: 750px) { .cards-3 { grid-template-columns: 1fr; } }
+
+    .info-card {
+      border: 2px solid var(--ink-black);
+      border-radius: 8px;
+      padding: 24px 20px;
+      box-shadow: 3px 3px 0 var(--ink-black);
+    }
+    .info-card .icon { font-size: 1.8rem; margin-bottom: 12px; }
+    .info-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .info-card p, .info-card li { font-size: 0.85rem; line-height: 1.6; color: var(--ink-brown); }
+    .info-card ul { padding-left: 16px; }
+    .info-card ul li { margin-bottom: 4px; }
+    .info-card.red { background: var(--paper-red); color: var(--pigment-white); border-color: var(--paper-red-dark); }
+    .info-card.red p, .info-card.red li, .info-card.red h3 { color: var(--pigment-white); }
+
+    /* ── DESIGN SYSTEM ─────────────────────────────────────────── */
+    .color-swatches {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin: 28px 0;
+    }
+    .swatch-item { text-align: center; }
+    .swatch-circle {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 3px solid var(--ink-black);
+      box-shadow: 3px 3px 0 var(--ink-black);
+      margin: 0 auto 8px;
+    }
+    .swatch-item .swatch-name { font-size: 0.7rem; font-weight: 600; display: block; }
+    .swatch-item .swatch-hex  { font-size: 0.65rem; color: var(--ink-brown); font-family: monospace; }
+
+    .type-samples { margin: 28px 0; display: flex; flex-direction: column; gap: 20px; }
+    .type-row { border-bottom: 1px solid var(--doc-border); padding-bottom: 16px; }
+    .type-row .label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--surface-wood); margin-bottom: 4px; }
+
+    /* ── MERMAID ───────────────────────────────────────────────── */
+    .mermaid-wrap {
+      background: var(--surface-paper);
+      border: 2px solid var(--doc-border);
+      border-radius: 8px;
+      padding: 32px 24px;
+      margin: 28px 0;
+      overflow-x: auto;
+    }
+    .mermaid-wrap .mermaid { max-width: 100%; }
+    .diagram-caption {
+      font-size: 0.78rem;
+      color: var(--surface-wood);
+      font-style: italic;
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    /* ── SCREEN MOCKUPS ────────────────────────────────────────── */
+    .screens-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 48px 32px;
+      margin-top: 40px;
+    }
+    .screen-block {}
+    .screen-header {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .screen-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--paper-red);
+      background: var(--surface-paper);
+      border: 2px solid var(--paper-red);
+      border-radius: 4px;
+      padding: 1px 8px;
+    }
+    .screen-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    .screen-vi { font-size: 0.8rem; color: var(--ink-brown); font-style: italic; }
+
+    .phone-frame {
+      width: 240px;
+      height: 420px;
+      border: 4px solid var(--ink-black);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 6px 6px 0 var(--ink-black);
+      position: relative;
+      background: white;
+      margin: 0 auto 16px;
+    }
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .screen-desc { font-size: 0.85rem; line-height: 1.65; color: var(--ink-brown); }
+    .screen-desc strong { color: var(--ink-black); }
+
+    .interaction-list { margin: 10px 0 0 0; padding: 0; list-style: none; }
+    .interaction-list li {
+      font-size: 0.8rem;
+      color: var(--ink-brown);
+      padding: 5px 0 5px 18px;
+      border-bottom: 1px dashed var(--doc-border);
+      position: relative;
+    }
+    .interaction-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--paper-red);
+      font-weight: 700;
+    }
+    .interaction-list li:last-child { border-bottom: none; }
+
+    /* ── STATE BADGE ───────────────────────────────────────────── */
+    .state-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: monospace;
+      font-size: 0.72rem;
+      background: var(--ink-black);
+      color: var(--pigment-yellow);
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-top: 8px;
+    }
+
+    /* ── PHONE SCREEN CONTENTS ─────────────────────────────────── */
+    /* Screen 1: Home */
+    .s1-bg {
+      background: var(--paper-red);
+      background-image: radial-gradient(ellipse at 50% 30%, #d4503e 0%, var(--paper-red) 60%);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 16px 16px;
+      gap: 12px;
+    }
+    .s1-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--pigment-white);
+      text-align: center;
+      opacity: 0.9;
+    }
+    .s1-btn {
+      width: 100%;
+      background: var(--surface-wood);
+      color: var(--pigment-white);
+      border: 3px solid var(--ink-black);
+      border-radius: 6px;
+      padding: 12px 16px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-align: center;
+      box-shadow: 3px 3px 0 var(--ink-black);
+      font-family: 'Be Vietnam Pro', sans-serif;
+    }
+
+    /* Screen 2: Pick Paper */
+    .s2-bg {
+      background: var(--surface-paper);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 12px;
+      gap: 10px;
+    }
+    .s2-topbar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+    .s2-cards {
+      display: flex;
+      gap: 10px;
+      flex: 1;
+      align-items: stretch;
+    }
+    .paper-card {
+      flex: 1;
+      border: 3px solid var(--ink-black);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      box-shadow: 3px 3px 0 var(--ink-black);
+      font-size: 0.65rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .paper-card .card-swatch { width: 40px; height: 40px; border-radius: 50%; border: 2px solid rgba(0,0,0,0.3); }
+
+    /* Screen 3: Pick Motif */
+    .s3-bg {
+      background: var(--surface-paper);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 12px;
+      gap: 10px;
+    }
+    .s3-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      flex: 1;
+    }
+    .motif-card {
+      border: 3px solid var(--ink-black);
+      border-radius: 8px;
+      background: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      box-shadow: 3px 3px 0 var(--ink-black);
+      font-size: 0.6rem;
+      font-weight: 700;
+      position: relative;
+    }
+    .motif-card .coming {
+      position: absolute;
+      inset: 0;
+      background: rgba(237,232,216,0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.55rem;
+      font-weight: 700;
+      color: var(--ink-brown);
+      border-radius: 5px;
+      text-align: center;
+      padding: 4px;
+    }
+
+    /* Screen 4: Stamp */
+    .s4-screen {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .s4-topbar {
+      background: var(--surface-paper);
+      padding: 10px 12px;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--ink-black);
+      font-size: 0.65rem;
+      font-weight: 700;
+    }
+    .s4-canvas {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+    }
+    .pulse-hint {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 3px dashed rgba(255,255,255,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.9);
+      text-align: center;
+      animation: pulse-anim 2s ease-in-out infinite;
+    }
+    @keyframes pulse-anim {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.7; }
+    }
+    .stamp-corner {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      font-size: 1.4rem;
+      animation: bob 1.5s ease-in-out infinite;
+    }
+    @keyframes bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    /* Screen 5: Color */
+    .s5-screen { flex: 1; display: flex; flex-direction: column; }
+    .s5-topbar {
+      background: var(--surface-paper);
+      padding: 10px 12px;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--ink-black);
+      font-size: 0.65rem;
+      font-weight: 700;
+    }
+    .s5-canvas {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .s5-palette {
+      background: var(--surface-paper);
+      border-top: 2px solid var(--ink-black);
+      padding: 10px 12px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .palette-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid var(--ink-black);
+      box-shadow: 2px 2px 0 var(--ink-black);
+    }
+    .palette-dot.sel {
+      transform: scale(1.2);
+      outline: 2px solid var(--pigment-yellow);
+      outline-offset: 2px;
+    }
+    .mode-toggle {
+      background: var(--surface-paper);
+      border-top: 1px solid var(--doc-border);
+      padding: 6px 12px;
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+    }
+    .mode-btn {
+      font-size: 0.55rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 3px;
+      border: 1.5px solid var(--ink-black);
+    }
+    .mode-btn.active { background: var(--ink-black); color: white; }
+
+    /* Screen 6: Poem */
+    .s6-screen { flex: 1; display: flex; flex-direction: column; background: var(--surface-paper); }
+    .s6-topbar {
+      padding: 10px 12px;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--ink-black);
+      font-size: 0.65rem;
+      font-weight: 700;
+      background: var(--surface-paper);
+    }
+    .s6-painting {
+      margin: 10px 12px;
+      border: 2px solid var(--ink-black);
+      border-radius: 4px;
+      height: 160px;
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .s6-poem-corner {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      width: 32px;
+      height: 42px;
+      border: 2px dashed rgba(26,16,8,0.4);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 1rem;
+      color: var(--ink-black);
+    }
+    .s6-choose {
+      padding: 6px 12px;
+      font-size: 0.62rem;
+      font-weight: 700;
+      color: var(--ink-brown);
+    }
+    .s6-chars {
+      display: flex;
+      gap: 8px;
+      padding: 0 12px;
+      justify-content: center;
+    }
+    .char-btn {
+      flex: 1;
+      aspect-ratio: 1;
+      border: 3px solid var(--ink-black);
+      border-radius: 6px;
+      background: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 0 var(--ink-black);
+      gap: 2px;
+    }
+    .char-btn .han { font-family: 'Ma Shan Zheng', cursive; font-size: 1.3rem; color: var(--ink-black); }
+    .char-btn .viet { font-size: 0.45rem; font-weight: 700; color: var(--ink-brown); }
+
+    /* Screen 7: Done */
+    .s7-screen { flex: 1; display: flex; flex-direction: column; background: var(--paper-red); }
+    .s7-header {
+      padding: 12px;
+      text-align: center;
+      color: var(--pigment-white);
+      font-family: 'Playfair Display', serif;
+      font-size: 0.78rem;
+      font-style: italic;
+    }
+    .s7-frame {
+      margin: 0 16px;
+      border: 4px solid var(--surface-wood);
+      border-radius: 4px;
+      box-shadow: 0 0 0 2px var(--ink-black), 6px 6px 0 var(--ink-black);
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+    .s7-actions {
+      display: flex;
+      gap: 8px;
+      padding: 12px 16px;
+    }
+    .s7-btn {
+      flex: 1;
+      background: var(--surface-wood);
+      color: white;
+      border: 2px solid var(--ink-black);
+      border-radius: 4px;
+      padding: 8px;
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-align: center;
+      box-shadow: 2px 2px 0 var(--ink-black);
+      font-family: 'Be Vietnam Pro', sans-serif;
+    }
+
+    /* ── AI SECTION ────────────────────────────────────────────── */
+    .ai-layers {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 28px;
+    }
+    .ai-layer {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+    .ai-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--paper-red);
+      line-height: 1;
+    }
+    .ai-body h3 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .ai-body p { font-size: 0.85rem; color: var(--ink-brown); line-height: 1.6; }
+    .ai-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    .ai-badge.mvp { background: var(--color-success); color: white; }
+    .ai-badge.v2  { background: var(--pigment-indigo); color: white; }
+
+    /* ── ACCESSIBILITY ─────────────────────────────────────────── */
+    .a11y-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 28px;
+    }
+    .a11y-card {
+      background: var(--surface-paper);
+      border: 2px solid var(--ink-black);
+      border-radius: 8px;
+      padding: 18px;
+      box-shadow: 3px 3px 0 var(--ink-black);
+    }
+    .a11y-icon { font-size: 1.4rem; margin-bottom: 8px; }
+    .a11y-card h4 { font-size: 0.88rem; font-weight: 700; margin-bottom: 5px; }
+    .a11y-card p  { font-size: 0.78rem; color: var(--ink-brown); line-height: 1.55; }
+
+    /* ── TECH STACK ────────────────────────────────────────────── */
+    .tech-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 24px 0;
+    }
+    .tech-chip {
+      background: var(--ink-black);
+      color: var(--pigment-yellow);
+      font-family: monospace;
+      font-size: 0.82rem;
+      padding: 6px 14px;
+      border-radius: 4px;
+    }
+    .tech-chip.light {
+      background: var(--surface-paper);
+      color: var(--ink-black);
+      border: 2px solid var(--ink-black);
+    }
+
+    /* ── MVP PHASES ────────────────────────────────────────────── */
+    .phases {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 28px;
+      border: 2px solid var(--ink-black);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .phase-row {
+      display: grid;
+      grid-template-columns: 120px 1fr auto;
+      align-items: start;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--doc-border);
+      gap: 16px;
+    }
+    .phase-row:last-child { border-bottom: none; }
+    .phase-row:nth-child(even) { background: var(--surface-paper); }
+    .phase-label { font-size: 0.75rem; font-weight: 700; color: var(--ink-brown); }
+    .phase-title { font-size: 0.88rem; font-weight: 600; }
+    .phase-desc  { font-size: 0.78rem; color: var(--ink-brown); margin-top: 3px; }
+    .phase-status {
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+    .phase-status.core    { background: var(--paper-red);    color: white; }
+    .phase-status.feature { background: var(--pigment-indigo); color: white; }
+    .phase-status.polish  { background: var(--surface-wood);   color: white; }
+    .phase-status.docs    { background: var(--color-success);  color: white; }
+
+    /* ── REFERENCES ────────────────────────────────────────────── */
+    .ref-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+    .ref-list li {
+      font-size: 0.85rem;
+      padding: 12px 16px;
+      background: var(--surface-paper);
+      border-radius: 6px;
+      border-left: 3px solid var(--paper-yellow);
+      line-height: 1.5;
+    }
+    .ref-list li a { color: var(--paper-red); font-weight: 600; }
+    .ref-list li .ref-type { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--surface-wood); display: block; margin-bottom: 3px; }
+
+    /* ── FOOTER ────────────────────────────────────────────────── */
+    .footer {
+      background: var(--ink-black);
+      color: rgba(237,232,216,0.6);
+      text-align: center;
+      padding: 28px;
+      font-size: 0.78rem;
+      line-height: 1.8;
+    }
+    .footer strong { color: var(--pigment-yellow); }
+
+    /* ── UTILITIES ─────────────────────────────────────────────── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 24px; }
+    @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+    .mt-16 { margin-top: 16px; }
+    .mt-24 { margin-top: 24px; }
+    .mt-32 { margin-top: 32px; }
+    hr.rule { border: none; border-top: 2px solid var(--doc-border); margin: 32px 0; }
+
+    /* ── INLINE PIG SVG ────────────────────────────────────────── */
+    .pig-reference-wrap {
+      background: var(--surface-paper);
+      border: 2px solid var(--ink-black);
+      border-radius: 8px;
+      padding: 24px;
+      text-align: center;
+      box-shadow: 4px 4px 0 var(--ink-black);
+    }
+    .pig-reference-wrap figcaption {
+      font-size: 0.75rem;
+      color: var(--ink-brown);
+      font-style: italic;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════
+     TOP NAV
+════════════════════════════════════════════════════════════ -->
+<nav class="topnav">
+  <div class="topnav-brand">Tranh Kim Hoàng</div>
+  <a href="#culture">Cultural Context</a>
+  <a href="#problem">Problem</a>
+  <a href="#design-system">Design System</a>
+  <a href="#ux-flow">UX Flow</a>
+  <a href="#screens">Screens</a>
+  <a href="#ai">AI Logic</a>
+  <a href="#accessibility">Accessibility</a>
+  <a href="#tech">Tech</a>
+  <a href="#scope">Scope</a>
+  <a href="#references">References</a>
+</nav>
+
+<!-- ════════════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════════════ -->
+<header class="hero">
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-label">Stakeholder Review · Draft v0.1 · June 2026</div>
+      <h1>Tranh <em>Kim Hoàng</em></h1>
+      <p class="hero-sub">
+        A game-based digital drawing app for children aged 5–8 with motor disabilities — 
+        teaching a nearly-lost Vietnamese folk art tradition through tap-only, AI-assisted interaction.
+      </p>
+      <div class="hero-meta">
+        <span class="hero-chip">📱 Web App (React + TypeScript)</span>
+        <span class="hero-chip">🎨 Cultural × Accessibility</span>
+        <span class="hero-chip">🏫 High School Portfolio Project</span>
+        <span class="hero-chip">🚫 No Backend · No App Store</span>
+      </div>
+    </div>
+    <div class="hero-pig">
+      <!-- Kim Hoàng style pig SVG -->
+      <svg viewBox="0 0 280 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;filter:drop-shadow(4px 6px 0 rgba(26,16,8,0.4))">
+        <!-- Shadow -->
+        <ellipse cx="140" cy="226" rx="85" ry="8" fill="#1A1008" opacity="0.2"/>
+        <!-- Tail -->
+        <path d="M 65 138 C 38 125, 28 105, 44 92 C 56 82, 70 94, 56 105 C 47 113, 51 124, 62 120"
+              fill="none" stroke="#B5300A" stroke-width="5" stroke-linecap="round"/>
+        <!-- Body -->
+        <ellipse cx="142" cy="158" rx="83" ry="58" fill="#EDE8D8" stroke="#1A1008" stroke-width="5"/>
+        <!-- Belly -->
+        <ellipse cx="142" cy="172" rx="42" ry="28" fill="#D4A017" stroke="#1A1008" stroke-width="3"/>
+        <!-- Head -->
+        <circle cx="214" cy="122" r="46" fill="#EDE8D8" stroke="#1A1008" stroke-width="5"/>
+        <!-- Ear L -->
+        <path d="M 192 83 C 182 60, 197 47, 208 62 C 213 71, 207 80, 196 84 Z"
+              fill="#B5300A" stroke="#1A1008" stroke-width="4" stroke-linejoin="round"/>
+        <!-- Ear R -->
+        <path d="M 228 80 C 234 57, 250 51, 252 68 C 253 78, 243 84, 232 81 Z"
+              fill="#B5300A" stroke="#1A1008" stroke-width="4" stroke-linejoin="round"/>
+        <!-- Eye L -->
+        <circle cx="202" cy="110" r="7" fill="#1A1008"/>
+        <circle cx="204" cy="108" r="2.5" fill="#EDE8D8"/>
+        <!-- Eye R -->
+        <circle cx="228" cy="108" r="7" fill="#1A1008"/>
+        <circle cx="230" cy="106" r="2.5" fill="#EDE8D8"/>
+        <!-- Snout -->
+        <ellipse cx="250" cy="133" rx="22" ry="16" fill="#B5300A" stroke="#1A1008" stroke-width="4"/>
+        <circle cx="244" cy="133" r="4.5" fill="#1A1008"/>
+        <circle cx="256" cy="133" r="4.5" fill="#1A1008"/>
+        <!-- Legs -->
+        <rect x="82" y="200" width="22" height="28" rx="5" fill="#2C3E6E" stroke="#1A1008" stroke-width="4"/>
+        <rect x="114" y="204" width="22" height="24" rx="5" fill="#2C3E6E" stroke="#1A1008" stroke-width="4"/>
+        <rect x="150" y="204" width="22" height="24" rx="5" fill="#2C3E6E" stroke="#1A1008" stroke-width="4"/>
+        <rect x="182" y="202" width="22" height="26" rx="5" fill="#2C3E6E" stroke="#1A1008" stroke-width="4"/>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<div class="main-wrap">
+
+<!-- ════════════════════════════════════════════════════════════
+     EXECUTIVE SUMMARY
+════════════════════════════════════════════════════════════ -->
+<section class="section" id="summary">
+  <div class="section-eyebrow">Overview</div>
+  <h2 class="section-title">Executive Summary</h2>
+
+  <div class="callout">
+    <strong>What we're building:</strong> A single-page React app that lets children aged 5–8 with motor 
+    disabilities experience Kim Hoàng Vietnamese folk painting through a 7-screen, tap-only flow — 
+    choose paper color → stamp a woodblock outline → color zones → add a poem character → save the result as a PNG.
+  </div>
+
+  <div class="cards-3 mt-32">
+    <div class="info-card">
+      <div class="icon">🎯</div>
+      <h3>The Core Bet</h3>
+      <p>One tap = one meaningful creative action. No drag, no precision grip, no sustained pressure — just intention → result.</p>
+    </div>
+    <div class="info-card">
+      <div class="icon">🏛️</div>
+      <h3>Cultural Mission</h3>
+      <p>Kim Hoàng painting is nearly extinct (last practised 1945, restored 2015). This app introduces a new generation to the authentic technique.</p>
+    </div>
+    <div class="info-card red">
+      <div class="icon">✅</div>
+      <h3>MVP Deliverable</h3>
+      <p>All 7 screens navigable. Pig motif fully functional. Rule-based AI color suggestions. Save as PNG. No backend required.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     CULTURAL CONTEXT
+════════════════════════════════════════════════════════════ -->
+<section class="section" id="culture">
+  <div class="section-eyebrow">Cultural Foundation</div>
+  <h2 class="section-title">What Is Kim Hoàng Painting?</h2>
+  <p class="section-lead">
+    Tranh Kim Hoàng is an 18th-century Vietnamese woodcut folk art from Kim Hoàng village, Hoài Đức, Hanoi. 
+    Understanding the tradition is essential to understanding every design decision in this app.
+  </p>
+
+  <!-- Technique Steps -->
+  <div class="technique-steps">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <h4>Pre-dye the paper</h4>
+      <p>Paper is dyed scarlet red (giấy hồng điều) or Chinese yellow (giấy vàng tầu) before anything else. The background carries emotional weight.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <h4>Stamp the woodblock</h4>
+      <p>A carved jackfruit wood block is inked and pressed onto the paper — creating the bold black outline in one decisive action.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <h4>Hand-color zones</h4>
+      <p>Mineral-based pigments (vermilion, gardenia yellow, white gypsum, indigo) are applied by hand with straw brushes. Same template, unique coloring every time.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <h4>Write the poem</h4>
+      <p>A Chinese character (福 Phúc, 祿 Lộc, 壽 Thọ) is handwritten in the top-left corner in cursive chữ thảo script — image + word = complete meaning.</p>
+    </div>
+  </div>
+
+  <div class="two-col mt-32">
+    <div>
+      <div class="culture-grid" style="grid-template-columns: 1fr;">
+        <div class="culture-card">
+          <span class="tag">History</span>
+          <h3>Nearly Lost</h3>
+          <p>A 1915 flood destroyed most original woodblocks in Kim Hoàng village. By 1945, no families continued the practice. Restoration efforts by collector Nguyễn Thị Thu Hoa began in 2015, recovering ~80 surviving paintings. The app participates in this cultural continuity.</p>
+        </div>
+        <div class="culture-card" style="margin-top:16px">
+          <span class="tag yellow">Technique</span>
+          <h3>Why the Pig?</h3>
+          <p>The pig (lợn) is the most iconic Kim Hoàng motif — a Tết symbol of prosperity. The fat, round pig with a curled tail is drawn in a characteristic folk style: bold black outline, chunky proportions, flat mineral colors. It is the MVP's primary motif.</p>
+        </div>
+      </div>
+    </div>
+
+    <figure class="pig-reference-wrap">
+      <svg viewBox="0 0 300 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:280px;margin:0 auto;display:block">
+        <!-- "paper" background -->
+        <rect width="300" height="260" fill="#C13B2A" rx="4"/>
+        <!-- Texture dots -->
+        <g fill="#1A1008" opacity="0.07">
+          <circle cx="30" cy="30" r="60"/><circle cx="270" cy="240" r="80"/>
+        </g>
+        <!-- Poem corner -->
+        <rect x="12" y="12" width="36" height="52" fill="none" stroke="#EDE8D8" stroke-width="1.5" stroke-dasharray="4,3" rx="2"/>
+        <text x="30" y="46" text-anchor="middle" font-family="Ma Shan Zheng, serif" font-size="28" fill="#EDE8D8">福</text>
+        <!-- Pig body -->
+        <ellipse cx="155" cy="168" rx="80" ry="56" fill="#EDE8D8" stroke="#1A1008" stroke-width="4.5"/>
+        <ellipse cx="155" cy="180" rx="38" ry="25" fill="#D4A017" stroke="#1A1008" stroke-width="3"/>
+        <!-- Tail -->
+        <path d="M 78 155 C 55 142, 45 122, 60 110 C 72 100, 84 112, 70 122 C 62 130, 66 140, 75 137"
+              fill="none" stroke="#B5300A" stroke-width="4.5" stroke-linecap="round"/>
+        <!-- Head -->
+        <circle cx="225" cy="132" r="44" fill="#EDE8D8" stroke="#1A1008" stroke-width="4.5"/>
+        <!-- Ears -->
+        <path d="M 204 93 C 194 72, 210 58, 220 74 C 225 83, 218 92, 207 95 Z" fill="#B5300A" stroke="#1A1008" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M 238 90 C 244 68, 260 62, 262 79 C 263 89, 253 95, 242 92 Z" fill="#B5300A" stroke="#1A1008" stroke-width="4" stroke-linejoin="round"/>
+        <!-- Eyes -->
+        <circle cx="214" cy="120" r="7" fill="#1A1008"/>
+        <circle cx="216" cy="118" r="2.5" fill="#EDE8D8"/>
+        <circle cx="240" cy="118" r="7" fill="#1A1008"/>
+        <circle cx="242" cy="116" r="2.5" fill="#EDE8D8"/>
+        <!-- Snout -->
+        <ellipse cx="260" cy="143" rx="21" ry="15" fill="#B5300A" stroke="#1A1008" stroke-width="4"/>
+        <circle cx="254" cy="143" r="4" fill="#1A1008"/>
+        <circle cx="266" cy="143" r="4" fill="#1A1008"/>
+        <!-- Legs -->
+        <rect x="95" y="210" width="21" height="28" rx="5" fill="#2C3E6E" stroke="#1A1008" stroke-width="3.5"/>
+        <rect x="125" y="214" width="21" height="24" rx="5" fill="#2C3E6E" stroke="#1A1008" stroke-width="3.5"/>
+        <rect x="160" y="214" width="21" height="24" rx="5" fill="#2C3E6E" stroke="#1A1008" stroke-width="3.5"/>
+        <rect x="190" y="212" width="21" height="26" rx="5" fill="#2C3E6E" stroke="#1A1008" stroke-width="3.5"/>
+      </svg>
+      <figcaption>App-generated Kim Hoàng pig (Lợn) on scarlet paper — matching authentic motif style. The white body, red ears, indigo legs, and yellow belly are the historically accurate Kim Hoàng color scheme.</figcaption>
+    </figure>
+  </div>
+
+  <div class="reference-links mt-32">
+    <a href="https://en.wikipedia.org/wiki/Kim_Ho%C3%A0ng_painting" target="_blank" class="ref-link">Wikipedia: Kim Hoàng Painting</a>
+    <a href="https://www.bsc.vn/news/kim-hoang-painting-a-folk-art-on-the-verge-of-extinction" target="_blank" class="ref-link">Kim Hoàng: Folk Art on the Verge of Extinction</a>
+    <a href="https://vietnamtourism.gov.vn/en/post/13952" target="_blank" class="ref-link">Vietnam Tourism: Kim Hoàng Village</a>
+    <a href="https://artsandculture.google.com/story/the-revival-of-kim-ho-ng-folk-paintings/gQWB7hWjvuXLLQ" target="_blank" class="ref-link">Google Arts & Culture: Revival of Kim Hoàng</a>
+    <a href="https://baotangmythuatvietnam.vn/en" target="_blank" class="ref-link">Vietnam Fine Arts Museum</a>
+    <a href="https://www.youtube.com/results?search_query=tranh+kim+ho%C3%A0ng" target="_blank" class="ref-link">YouTube: Tranh Kim Hoàng demos</a>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     PROBLEM
+════════════════════════════════════════════════════════════ -->
+<section class="section" id="problem">
+  <div class="section-eyebrow">Problem &amp; Opportunity</div>
+  <h2 class="section-title">Who Is Excluded and Why</h2>
+  <p class="section-lead">
+    Traditional art activities — including village visits to Kim Hoàng — assume a set of motor capabilities that many children simply don't have.
+  </p>
+
+  <div class="callout">
+    <strong>The exclusion barrier:</strong> Holding a brush, staying inside lines, applying consistent pressure, and using bilateral hand coordination are all required by traditional painting. Children with cerebral palsy, developmental coordination disorder (DCD), or upper-limb differences are systematically excluded from the creative experience.
+  </div>
+
+  <div class="cards-3 mt-32">
+    <div class="info-card">
+      <div class="icon">🧒</div>
+      <h3>Primary User</h3>
+      <ul>
+        <li>Age 5–8</li>
+        <li>Motor disability (tremors, limited fine-motor control, single-finger tap only)</li>
+        <li>May have co-occurring attention differences</li>
+        <li>Likely uses a tablet with a caregiver nearby</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <div class="icon">👩‍🏫</div>
+      <h3>Secondary User (Facilitator)</h3>
+      <ul>
+        <li>Parent, teacher, or therapist</li>
+        <li>Sets up the app before handing it to the child</li>
+        <li>May toggle caregiver settings (sound, mode)</li>
+        <li>Sits alongside but does not control the session</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <div class="icon">🚫</div>
+      <h3>Design Non-Goals</h3>
+      <ul>
+        <li>No drag interactions</li>
+        <li>No voice control (co-occurring speech impairments)</li>
+        <li>No time pressure or countdowns</li>
+        <li>No "wrong answer" states</li>
+        <li>No login or accounts</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout yellow mt-32">
+    <strong>Research backing:</strong> Design constraints derive from WHO Global Report on Assistive Technology (2021), 
+    UNICEF "Designing for Children with Disabilities" guidelines, and Universal Design for Learning (UDL) Framework. 
+    See <a href="#references">References</a> for full citations.
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     DESIGN SYSTEM
+════════════════════════════════════════════════════════════ -->
+<section class="section" id="design-system">
+  <div class="section-eyebrow">Visual Identity</div>
+  <h2 class="section-title">Design System</h2>
+  <p class="section-lead">
+    Every visual decision is derived from Kim Hoàng's physical materials — the scarlet paper, woodblock ink, 
+    and five mineral pigments. There is no neutral background: the whole app lives on red paper.
+  </p>
+
+  <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:16px">Kim Hoàng Pigment Palette</h3>
+  <div class="color-swatches">
+    <div class="swatch-item">
+      <div class="swatch-circle" style="background:#C13B2A"></div>
+      <span class="swatch-name">Giấy Đỏ</span>
+      <span class="swatch-hex">#C13B2A</span>
+    </div>
+    <div class="swatch-item">
+      <div class="swatch-circle" style="background:#C89A1A"></div>
+      <span class="swatch-name">Giấy Vàng</span>
+      <span class="swatch-hex">#C89A1A</span>
+    </div>
+    <div class="swatch-item">
+      <div class="swatch-circle" style="background:#1A1008"></div>
+      <span class="swatch-name">Mực / Ink</span>
+      <span class="swatch-hex">#1A1008</span>
+    </div>
+    <div class="swatch-item">
+      <div class="swatch-circle" style="background:#B5300A"></div>
+      <span class="swatch-name">Son Đỏ</span>
+      <span class="swatch-hex">#B5300A</span>
+    </div>
+    <div class="swatch-item">
+      <div class="swatch-circle" style="background:#D4A017"></div>
+      <span class="swatch-name">Vàng</span>
+      <span class="swatch-hex">#D4A017</span>
+    </div>
+    <div class="swatch-item">
+      <div class="swatch-circle" style="background:#EDE8D8"></div>
+      <span class="swatch-name">Trắng Thạch Cao</span>
+      <span class="swatch-hex">#EDE8D8</span>
+    </div>
+    <div class="swatch-item">
+      <div class="swatch-circle" style="background:#2C3E6E"></div>
+      <span class="swatch-name">Chàm / Indigo</span>
+      <span class="swatch-hex">#2C3E6E</span>
+    </div>
+    <div class="swatch-item">
+      <div class="swatch-circle" style="background:#8B6340"></div>
+      <span class="swatch-name">Gỗ Mít / Wood</span>
+      <span class="swatch-hex">#8B6340</span>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Playfair Display',serif;font-size:1.1rem;margin:32px 0 16px">Typography</h3>
+  <div class="type-samples">
+    <div class="type-row">
+      <div class="label">Display — Playfair Display 700</div>
+      <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;line-height:1.1">Tranh Kim Hoàng</div>
+    </div>
+    <div class="type-row">
+      <div class="label">Display Italic — Playfair Display 700i</div>
+      <div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;font-style:italic;line-height:1.1">Bắt đầu vẽ!</div>
+    </div>
+    <div class="type-row">
+      <div class="label">Body — Be Vietnam Pro 400/600 (Vietnamese optimized)</div>
+      <div style="font-family:'Be Vietnam Pro',sans-serif;font-size:1rem;line-height:1.6">Chọn giấy nền <span style="font-weight:600">· Choose paper</span> · Proper diacritics: ắ ộ ư ề</div>
+    </div>
+    <div class="type-row">
+      <div class="label">Calligraphy — Ma Shan Zheng (poem corner characters)</div>
+      <div style="font-family:'Ma Shan Zheng',cursive;font-size:2.4rem;line-height:1;letter-spacing:0.1em">福 祿 壽</div>
+    </div>
+  </div>
+
+  <div class="callout indigo mt-24">
+    <strong>Component principle:</strong> Buttons have a <code>4px solid block shadow</code> (woodblock press aesthetic). 
+    Tap state collapses the shadow 3→1px to simulate pressing a physical stamp. All interactive elements ≥ 80×80px.
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     UX FLOW
+════════════════════════════════════════════════════════════ -->
+<section class="section" id="ux-flow">
+  <div class="section-eyebrow">User Experience</div>
+  <h2 class="section-title">App Flow</h2>
+  <p class="section-lead">
+    A strict 7-screen linear flow. No branching, no dead ends. Back navigation available on screens 2–6 only. 
+    Every path leads to a completed painting.
+  </p>
+
+  <div class="mermaid-wrap">
+    <div class="mermaid">
+flowchart LR
+    S1("🏠 **Screen 1**\nHome")
+    S2("📄 **Screen 2**\nPick Paper")
+    S3("🖼️ **Screen 3**\nPick Motif")
+    S4("🪵 **Screen 4**\nStamp")
+    S5("🎨 **Screen 5**\nColor")
+    S6("✍️ **Screen 6**\nPoem")
+    S7("🎉 **Screen 7**\nDone")
+
+    S1 -->|"Tap Bắt đầu vẽ!"| S2
+    S2 -->|"Select paper color"| S3
+    S3 -->|"Select motif"| S4
+    S4 -->|"Tap canvas"| S5
+    S5 -->|"All zones filled"| S6
+    S6 -->|"Choose character"| S7
+    S7 -->|"🔄 Vẽ lại\n reset all state"| S1
+
+    S2 -. back .-> S1
+    S3 -. back .-> S2
+    S4 -. back .-> S3
+    S5 -. back .-> S4
+    S6 -. back .-> S5
+
+    style S1 fill:#C13B2A,color:#EDE8D8,stroke:#8B2419
+    style S7 fill:#4A7C59,color:#EDE8D8,stroke:#2d5038
+    </div>
+    <p class="diagram-caption">Fig 1 — Linear 7-screen UX flow. Dashed lines = back navigation. Green = terminal success state.</p>
+  </div>
+
+  <h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;margin:32px 0 12px">State Machine</h3>
+  <div class="mermaid-wrap">
+    <div class="mermaid">
+stateDiagram-v2
+    [*] --> Home
+    Home --> PickPaper : tap "Bắt đầu vẽ!"
+    PickPaper --> PickMotif : store.paperColor ← 'red' | 'yellow'
+    PickPaper --> Home : back
+    PickMotif --> Stamp : store.motif ← 'pig' | ...
+    PickMotif --> PickPaper : back
+    Stamp --> Color : store.stamped ← true
+    Stamp --> PickMotif : back
+    Color --> Poem : store.colorMap complete
+    Color --> Stamp : back
+    Poem --> Done : store.poem ← '福'|'祿'|'壽'
+    Poem --> Color : back
+    Done --> Home : store.reset() — Vẽ lại
+    Done --> [*] : Save PNG — session ends
+    </div>
+    <p class="diagram-caption">Fig 2 — App state machine mapping screens to Zustand store mutations.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     SCREENS
+════════════════════════════════════════════════════════════ -->
+<section class="section" id="screens">
+  <div class="section-eyebrow">Screen-by-Screen</div>
+  <h2 class="section-title">All 7 Screens</h2>
+  <p class="section-lead">Each screen mockup shows the actual Kim Hoàng color palette and layout proportions at 240×420px (scaled phone view).</p>
+
+  <div class="screens-grid">
+
+    <!-- ── SCREEN 1: HOME ── -->
+    <div class="screen-block">
+      <div class="screen-header">
+        <span class="screen-num">Screen 1</span>
+        <span class="screen-name">Home</span>
+        <span class="screen-vi">Trang chủ</span>
+      </div>
+      <div class="phone-frame">
+        <div class="phone-screen">
+          <div class="s1-bg">
+            <svg viewBox="0 0 160 140" style="width:130px">
+              <ellipse cx="80" cy="130" rx="50" ry="5" fill="#1A1008" opacity="0.2"/>
+              <path d="M 37 85 C 22 75, 16 60, 28 50 C 38 42, 48 52, 37 60 C 30 66, 33 76, 40 72" fill="none" stroke="#B5300A" stroke-width="3.5" stroke-linecap="round"/>
+              <ellipse cx="82" cy="95" rx="50" ry="36" fill="#EDE8D8" stroke="#1A1008" stroke-width="3.5"/>
+              <ellipse cx="82" cy="104" rx="24" ry="16" fill="#D4A017" stroke="#1A1008" stroke-width="2.5"/>
+              <circle cx="124" cy="74" r="28" fill="#EDE8D8" stroke="#1A1008" stroke-width="3.5"/>
+              <path d="M 110 50 C 103 34, 114 24, 122 38 C 126 45, 121 52, 113 54 Z" fill="#B5300A" stroke="#1A1008" stroke-width="2.5" stroke-linejoin="round"/>
+              <path d="M 132 48 C 138 32, 150 28, 151 41 C 152 49, 144 54, 136 52 Z" fill="#B5300A" stroke="#1A1008" stroke-width="2.5" stroke-linejoin="round"/>
+              <circle cx="116" cy="66" r="5" fill="#1A1008"/>
+              <circle cx="134" cy="65" r="5" fill="#1A1008"/>
+              <ellipse cx="149" cy="82" rx="13" ry="10" fill="#B5300A" stroke="#1A1008" stroke-width="3"/>
+              <circle cx="144" cy="82" r="3" fill="#1A1008"/>
+              <circle cx="154" cy="82" r="3" fill="#1A1008"/>
+              <rect x="52" y="122" width="13" height="17" rx="3" fill="#2C3E6E" stroke="#1A1008" stroke-width="2.5"/>
+              <rect x="70" y="124" width="13" height="15" rx="3" fill="#2C3E6E" stroke="#1A1008" stroke-width="2.5"/>
+              <rect x="90" y="124" width="13" height="15" rx="3" fill="#2C3E6E" stroke="#1A1008" stroke-width="2.5"/>
+              <rect x="108" y="123" width="13" height="16" rx="3" fill="#2C3E6E" stroke="#1A1008" stroke-width="2.5"/>
+            </svg>
+            <div class="s1-title">Tranh Kim Hoàng 🎨</div>
+            <div class="s1-btn">🖌️ Bắt đầu vẽ!<br><span style="font-size:0.55rem;opacity:0.8;font-weight:400">Start painting</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-desc">
+        <strong>Single entry point.</strong> The animated Kim Hoàng pig bounces gently on scarlet paper. One button, full width.
+      </div>
+      <ul class="interaction-list">
+        <li>Tap button → slide-up transition to Screen 2</li>
+        <li>No other tappable elements</li>
+        <li>No state changes (stateless screen)</li>
+      </ul>
+    </div>
+
+    <!-- ── SCREEN 2: PICK PAPER ── -->
+    <div class="screen-block">
+      <div class="screen-header">
+        <span class="screen-num">Screen 2</span>
+        <span class="screen-name">Pick Paper</span>
+        <span class="screen-vi">Chọn giấy nền</span>
+      </div>
+      <div class="phone-frame">
+        <div class="phone-screen">
+          <div class="s2-bg">
+            <div class="s2-topbar">
+              <span>← Chọn giấy nền</span>
+            </div>
+            <div class="s2-cards">
+              <div class="paper-card" style="background:#C13B2A;color:white;border-color:#8B2419;">
+                <div class="card-swatch" style="background:radial-gradient(circle,#D4503E,#8B2419)"></div>
+                <span>Giấy Đỏ</span>
+                <span style="font-size:0.5rem;opacity:0.8">Red paper</span>
+              </div>
+              <div class="paper-card" style="background:#C89A1A;color:#1A1008;border-color:#9A7512;">
+                <div class="card-swatch" style="background:radial-gradient(circle,#D4A82B,#9A7512)"></div>
+                <span>Giấy Vàng</span>
+                <span style="font-size:0.5rem;opacity:0.7">Yellow paper</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-desc">
+        <strong>Two choices only.</strong> Authentic Kim Hoàng papers. Cards are ~160×200px — well above 80px minimum.
+      </div>
+      <ul class="interaction-list">
+        <li>Tap card → spring bounce animation → navigate to Screen 3</li>
+        <li>store.paperColor = 'red' | 'yellow'</li>
+        <li>Back arrow → Screen 1</li>
+      </ul>
+      <div class="state-badge">store.paperColor</div>
+    </div>
+
+    <!-- ── SCREEN 3: PICK MOTIF ── -->
+    <div class="screen-block">
+      <div class="screen-header">
+        <span class="screen-num">Screen 3</span>
+        <span class="screen-name">Pick Motif</span>
+        <span class="screen-vi">Chọn hình vẽ</span>
+      </div>
+      <div class="phone-frame">
+        <div class="phone-screen">
+          <div class="s3-bg">
+            <div class="s2-topbar">
+              <span>← Chọn hình vẽ</span>
+            </div>
+            <div class="s3-grid">
+              <div class="motif-card" style="background:#F5EDD8;">
+                <svg viewBox="0 0 80 70" width="48">
+                  <ellipse cx="38" cy="46" rx="24" ry="17" fill="#EDE8D8" stroke="#1A1008" stroke-width="2.5"/>
+                  <circle cx="58" cy="34" r="14" fill="#EDE8D8" stroke="#1A1008" stroke-width="2.5"/>
+                  <path d="M 51 21 C 47 14,53 9,57 16 Z" fill="#B5300A" stroke="#1A1008" stroke-width="2"/>
+                  <path d="M 62 20 C 66 13,72 15,70 22 Z" fill="#B5300A" stroke="#1A1008" stroke-width="2"/>
+                  <ellipse cx="68" cy="38" rx="7" ry="5" fill="#B5300A" stroke="#1A1008" stroke-width="2"/>
+                  <circle cx="53" cy="30" r="3" fill="#1A1008"/>
+                  <circle cx="64" cy="29" r="3" fill="#1A1008"/>
+                  <rect x="24" y="56" width="7" height="10" rx="2" fill="#2C3E6E" stroke="#1A1008" stroke-width="1.5"/>
+                  <rect x="35" y="58" width="7" height="8"  rx="2" fill="#2C3E6E" stroke="#1A1008" stroke-width="1.5"/>
+                  <rect x="46" y="58" width="7" height="8"  rx="2" fill="#2C3E6E" stroke="#1A1008" stroke-width="1.5"/>
+                </svg>
+                <span>Lợn / Pig</span>
+              </div>
+              <div class="motif-card" style="background:#F5EDD8;">
+                <span style="font-size:1.8rem">🐓</span>
+                <span>Gà / Rooster</span>
+                <div class="coming">Sắp ra mắt<br>Coming soon</div>
+              </div>
+              <div class="motif-card" style="background:#F5EDD8;">
+                <span style="font-size:1.8rem">🐃</span>
+                <span>Trâu / Buffalo</span>
+                <div class="coming">Sắp ra mắt<br>Coming soon</div>
+              </div>
+              <div class="motif-card" style="background:#F5EDD8;">
+                <span style="font-size:1.8rem">🐟</span>
+                <span>Cá / Fish</span>
+                <div class="coming">Sắp ra mắt<br>Coming soon</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-desc">
+        <strong>4 choices, 2×2 grid.</strong> MVP: Pig is fully functional. Others show "Coming soon" overlay. Maximum cognitive load = 4 options.
+      </div>
+      <ul class="interaction-list">
+        <li>Tap pig card → bounce animation → Screen 4</li>
+        <li>store.motif = 'pig'</li>
+        <li>Other cards: tap shows overlay, no navigation</li>
+      </ul>
+      <div class="state-badge">store.motif</div>
+    </div>
+
+    <!-- ── SCREEN 4: STAMP ── -->
+    <div class="screen-block">
+      <div class="screen-header">
+        <span class="screen-num">Screen 4</span>
+        <span class="screen-name">The Stamp</span>
+        <span class="screen-vi">Đóng dấu</span>
+      </div>
+      <div class="phone-frame">
+        <div class="phone-screen">
+          <div class="s4-screen">
+            <div class="s4-topbar">
+              <span>←</span>
+              <span style="opacity:0.4">↩️ Undo</span>
+            </div>
+            <div class="s4-canvas" style="background:#C13B2A;background-image:radial-gradient(ellipse at 50% 40%,#d4503e,#8B2419);">
+              <div style="text-align:center;color:rgba(237,232,216,0.6);font-size:0.6rem;margin-bottom:4px;">Nhấn để đóng dấu<br>Tap to stamp</div>
+              <div class="pulse-hint">✨<br><span style="font-size:0.45rem">tap here</span></div>
+              <div class="stamp-corner">🪵</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-desc">
+        <strong>The culturally significant moment.</strong> The entire canvas is the tap target — maximum accessibility. Stamp presses down, then the pig outline draws itself with an ink-bleed animation.
+      </div>
+      <ul class="interaction-list">
+        <li>Tap anywhere → stamp presses (scale + shadow, 300ms)</li>
+        <li>Pig SVG outline draws via pathLength 0→1 (600ms)</li>
+        <li>store.stamped = true</li>
+        <li>Auto-navigate to Screen 5 after 1200ms</li>
+      </ul>
+      <div class="state-badge">store.stamped = true</div>
+    </div>
+
+    <!-- ── SCREEN 5: COLOR ── -->
+    <div class="screen-block">
+      <div class="screen-header">
+        <span class="screen-num">Screen 5</span>
+        <span class="screen-name">Coloring</span>
+        <span class="screen-vi">Tô màu</span>
+      </div>
+      <div class="phone-frame">
+        <div class="phone-screen">
+          <div class="s5-screen">
+            <div class="s5-topbar">
+              <span>←</span>
+              <span>↩️ Undo</span>
+            </div>
+            <div class="s5-canvas" style="background:#C13B2A;">
+              <svg viewBox="0 0 130 110" width="130">
+                <!-- partially colored pig -->
+                <path d="M 26 65 C 14 57, 10 45, 18 38 C 25 33, 31 40, 24 46 C 19 51, 21 59, 27 56" fill="none" stroke="#B5300A" stroke-width="2.5" stroke-linecap="round"/>
+                <ellipse cx="65" cy="72" rx="42" ry="28" fill="#EDE8D8" stroke="#1A1008" stroke-width="2.5"/>
+                <ellipse cx="65" cy="79" rx="18" ry="12" fill="#D4A017" stroke="#1A1008" stroke-width="2"/>
+                <circle cx="96" cy="55" r="22" fill="#EDE8D8" stroke="#1A1008" stroke-width="2.5"/>
+                <path d="M 85 35 C 79 22,87 15,93 26 C 96 32,92 38,86 40 Z" fill="#B5300A" stroke="#1A1008" stroke-width="2"/>
+                <path d="M 100 33 C 106 20,116 22,115 32 C 115 39,107 43,101 41 Z" fill="#B5300A" stroke="#1A1008" stroke-width="2"/>
+                <circle cx="89" cy="49" r="4" fill="#1A1008"/>
+                <circle cx="103" cy="48" r="4" fill="#1A1008"/>
+                <ellipse cx="114" cy="62" rx="11" ry="8" fill="#B5300A" stroke="#1A1008" stroke-width="2"/>
+                <circle cx="110" cy="62" r="2.5" fill="#1A1008"/>
+                <circle cx="118" cy="62" r="2.5" fill="#1A1008"/>
+                <rect x="40" y="94" width="10" height="13" rx="2.5" fill="#2C3E6E" stroke="#1A1008" stroke-width="2"/>
+                <rect x="54" y="96" width="10" height="11" rx="2.5" fill="#2C3E6E" stroke="#1A1008" stroke-width="2"/>
+                <rect x="68" y="96" width="10" height="11" rx="2.5" fill="#2C3E6E" stroke="#1A1008" stroke-width="2"/>
+                <rect x="82" y="95" width="10" height="12" rx="2.5" fill="#2C3E6E" stroke="#1A1008" stroke-width="2"/>
+                <!-- pulsing zone hint -->
+                <ellipse cx="65" cy="72" rx="42" ry="28" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-dasharray="6,4"/>
+              </svg>
+            </div>
+            <div class="s5-palette">
+              <div class="palette-dot sel" style="background:#1A1008"></div>
+              <div class="palette-dot" style="background:#B5300A"></div>
+              <div class="palette-dot" style="background:#D4A017"></div>
+              <div class="palette-dot" style="background:#EDE8D8;border-color:#8B6340"></div>
+              <div class="palette-dot" style="background:#2C3E6E"></div>
+            </div>
+            <div class="mode-toggle">
+              <div class="mode-btn active">Guided</div>
+              <div class="mode-btn">Free</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-desc">
+        <strong>Core experience.</strong> In Guided Mode the app suggests historically accurate colors. Zone snapping forgives imprecise taps within 80px. Undo always visible.
+      </div>
+      <ul class="interaction-list">
+        <li>Tap zone → zone snapping finds nearest zone center (80px radius)</li>
+        <li>Guided: AI suggests Kim Hoàng color → floods in</li>
+        <li>Free: child picks from 5-color palette first</li>
+        <li>Miss → gentle canvas shake, no error text</li>
+        <li>All zones filled → "Xong / Done" button appears</li>
+        <li>Undo → reverts last fill from stack</li>
+      </ul>
+      <div class="state-badge">store.colorMap &#123; zone_id: hex &#125;</div>
+    </div>
+
+    <!-- ── SCREEN 6: POEM ── -->
+    <div class="screen-block">
+      <div class="screen-header">
+        <span class="screen-num">Screen 6</span>
+        <span class="screen-name">Poem Corner</span>
+        <span class="screen-vi">Góc thơ</span>
+      </div>
+      <div class="phone-frame">
+        <div class="phone-screen">
+          <div class="s6-screen">
+            <div class="s6-topbar">
+              <span>←</span>
+              <span>↩️</span>
+            </div>
+            <div class="s6-painting" style="background:#C13B2A;">
+              <div class="s6-poem-corner">福</div>
+              <svg viewBox="0 0 200 155" width="100%" height="100%">
+                <ellipse cx="105" cy="108" rx="58" ry="40" fill="#EDE8D8" stroke="#1A1008" stroke-width="2.5"/>
+                <ellipse cx="105" cy="118" rx="26" ry="16" fill="#D4A017" stroke="#1A1008" stroke-width="2"/>
+                <circle cx="148" cy="80" r="30" fill="#EDE8D8" stroke="#1A1008" stroke-width="2.5"/>
+                <ellipse cx="165" cy="90" rx="15" ry="11" fill="#B5300A" stroke="#1A1008" stroke-width="2"/>
+                <circle cx="161" cy="90" r="3" fill="#1A1008"/>
+                <circle cx="169" cy="90" r="3" fill="#1A1008"/>
+                <circle cx="136" cy="73" r="5" fill="#1A1008"/>
+                <circle cx="152" cy="71" r="5" fill="#1A1008"/>
+                <path d="M 116 65 C 109 52,117 44,123 56 C 126 62,121 67,116 68 Z" fill="#B5300A" stroke="#1A1008" stroke-width="2"/>
+                <path d="M 132 63 C 138 50,147 52,146 62 C 146 69,139 72,133 70 Z" fill="#B5300A" stroke="#1A1008" stroke-width="2"/>
+                <rect x="65" y="140" width="14" height="19" rx="3" fill="#2C3E6E" stroke="#1A1008" stroke-width="2"/>
+                <rect x="84" y="143" width="14" height="16" rx="3" fill="#2C3E6E" stroke="#1A1008" stroke-width="2"/>
+                <rect x="108" y="143" width="14" height="16" rx="3" fill="#2C3E6E" stroke="#1A1008" stroke-width="2"/>
+                <rect x="128" y="142" width="14" height="18" rx="3" fill="#2C3E6E" stroke="#1A1008" stroke-width="2"/>
+              </svg>
+            </div>
+            <div class="s6-choose">Chọn lời chúc · Choose a wish:</div>
+            <div class="s6-chars">
+              <div class="char-btn" style="border-color:#8B2419;background:#FFF8F0;">
+                <span class="han">福</span>
+                <span class="viet">Phúc / Happy</span>
+              </div>
+              <div class="char-btn">
+                <span class="han">祿</span>
+                <span class="viet">Lộc / Luck</span>
+              </div>
+              <div class="char-btn">
+                <span class="han">壽</span>
+                <span class="viet">Thọ / Long</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-desc">
+        <strong>Closing ritual.</strong> The dotted box in the painting's top-left pulses to invite interaction. Tapping a character animates it into place with a brush-stroke calligraphy animation.
+      </div>
+      <ul class="interaction-list">
+        <li>Dotted corner box pulses → visual affordance</li>
+        <li>Tap character → calligraphy draw animation into corner</li>
+        <li>Tapping another replaces it (no undo needed)</li>
+        <li>"Xong! Done ✓" appears after selection</li>
+        <li>store.poem = '福' | '祿' | '壽'</li>
+      </ul>
+      <div class="state-badge">store.poem</div>
+    </div>
+
+    <!-- ── SCREEN 7: DONE ── -->
+    <div class="screen-block">
+      <div class="screen-header">
+        <span class="screen-num">Screen 7</span>
+        <span class="screen-name">Done</span>
+        <span class="screen-vi">Hoàn thành!</span>
+      </div>
+      <div class="phone-frame">
+        <div class="phone-screen">
+          <div class="s7-screen">
+            <div class="s7-header">🎉 Tranh của con! 🎉<br><span style="font-size:0.62rem;opacity:0.8">Your painting!</span></div>
+            <div class="s7-frame" style="background:#C13B2A;position:relative;">
+              <!-- confetti dots -->
+              <div style="position:absolute;inset:0;overflow:hidden;pointer-events:none">
+                <div style="position:absolute;width:8px;height:8px;background:#D4A017;border-radius:50%;top:10%;left:20%;animation:bob 2s ease-in-out infinite;"></div>
+                <div style="position:absolute;width:6px;height:6px;background:#EDE8D8;border-radius:50%;top:15%;left:60%;animation:bob 1.8s ease-in-out infinite 0.3s;"></div>
+                <div style="position:absolute;width:7px;height:7px;background:#2C3E6E;border-radius:50%;top:5%;left:80%;animation:bob 2.2s ease-in-out infinite 0.6s;"></div>
+                <div style="position:absolute;width:5px;height:5px;background:#B5300A;border-radius:2px;top:8%;left:40%;animation:bob 1.6s ease-in-out infinite 0.2s;"></div>
+              </div>
+              <!-- frame border -->
+              <div style="position:absolute;inset:6px;border:2px solid rgba(212,160,23,0.5);border-radius:2px;pointer-events:none;"></div>
+              <svg viewBox="0 0 180 140" width="100%" height="100%">
+                <text x="14" y="36" font-family="Ma Shan Zheng,serif" font-size="26" fill="#EDE8D8">福</text>
+                <ellipse cx="100" cy="100" rx="52" ry="35" fill="#EDE8D8" stroke="#1A1008" stroke-width="2.5"/>
+                <ellipse cx="100" cy="108" rx="23" ry="14" fill="#D4A017" stroke="#1A1008" stroke-width="2"/>
+                <circle cx="135" cy="72" r="26" fill="#EDE8D8" stroke="#1A1008" stroke-width="2.5"/>
+                <ellipse cx="151" cy="82" rx="13" ry="9" fill="#B5300A" stroke="#1A1008" stroke-width="2"/>
+                <circle cx="147" cy="82" r="3" fill="#1A1008"/>
+                <circle cx="155" cy="82" r="3" fill="#1A1008"/>
+                <circle cx="124" cy="65" r="4.5" fill="#1A1008"/>
+                <circle cx="138" cy="63" r="4.5" fill="#1A1008"/>
+                <path d="M 106 57 C 100 46,108 39,114 50 C 117 55,112 61,107 62 Z" fill="#B5300A" stroke="#1A1008" stroke-width="2"/>
+                <path d="M 120 55 C 126 44,135 46,134 55 C 134 62,127 65,121 63 Z" fill="#B5300A" stroke="#1A1008" stroke-width="2"/>
+                <rect x="62" y="128" width="12" height="17" rx="3" fill="#2C3E6E" stroke="#1A1008" stroke-width="2"/>
+                <rect x="79" y="131" width="12" height="14" rx="3" fill="#2C3E6E" stroke="#1A1008" stroke-width="2"/>
+                <rect x="99" y="131" width="12" height="14" rx="3" fill="#2C3E6E" stroke="#1A1008" stroke-width="2"/>
+                <rect x="116" y="130" width="12" height="16" rx="3" fill="#2C3E6E" stroke="#1A1008" stroke-width="2"/>
+              </svg>
+            </div>
+            <div class="s7-actions">
+              <div class="s7-btn">🖌️ Vẽ lại<br>Paint again</div>
+              <div class="s7-btn">💾 Lưu<br>Save</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-desc">
+        <strong>Celebration state.</strong> Confetti animation on mount. Painting displayed in a framed, "pinned-to-wall" style. Two clear actions.
+      </div>
+      <ul class="interaction-list">
+        <li>Confetti animation on load (framer-motion)</li>
+        <li>"Vẽ lại" → store.reset() → navigate to Screen 1</li>
+        <li>"Lưu 💾" → export canvas as PNG (html2canvas or Web Share API)</li>
+        <li>Optional audio: narrates what the child painted</li>
+      </ul>
+      <div class="state-badge">store.reset() | PNG export</div>
+    </div>
+
+  </div><!-- /screens-grid -->
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     AI LOGIC
+════════════════════════════════════════════════════════════ -->
+<section class="section" id="ai">
+  <div class="section-eyebrow">Intelligence</div>
+  <h2 class="section-title">AI Assist System — Three Layers</h2>
+  <p class="section-lead">
+    The "AI" in this app is intentionally rule-based for MVP — no live model calls, no API dependency. 
+    This is a deliberate accessibility design choice: intelligent defaults, not a language model.
+  </p>
+
+  <div class="ai-layers">
+    <div class="ai-layer">
+      <div class="ai-num">1</div>
+      <div class="ai-body">
+        <h3>Zone Snap Tolerance <span class="ai-badge mvp">✅ MVP</span></h3>
+        <p>Children with tremors or imprecision aim for a zone and may land 50px off-center. The system finds the nearest zone center within an 80px snap radius and credits the tap to that zone. If no zone is within range, a gentle canvas shake plays — no error text, no red X. The snap radius can be increased to 120px for higher accessibility needs.</p>
+      </div>
+    </div>
+    <div class="ai-layer">
+      <div class="ai-num">2</div>
+      <div class="ai-body">
+        <h3>Color Suggestion Engine <span class="ai-badge mvp">✅ MVP</span></h3>
+        <p>In Guided Mode, the app automatically selects the historically accurate Kim Hoàng color for each zone — derived from research on real 18th-century paintings. The child taps a zone and the correct color floods in without needing to make a palette choice. In Free Mode, the child manually selects a color first. Completion is detected when every zone in the motif's color map has been filled.</p>
+      </div>
+    </div>
+    <div class="ai-layer">
+      <div class="ai-num">3</div>
+      <div class="ai-body">
+        <h3>Stroke Completion <span class="ai-badge v2">❌ V2 Only</span></h3>
+        <p>Higher-functioning children submit a rough scribble; a fine-tuned vision model (ControlNet scribble mode or Claude API with vision) returns a Kim Hoàng-style SVG outline. Out of scope for MVP due to API latency, cost, and portfolio demo constraints. Documented as the full product vision.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;margin:36px 0 12px">Coloring Interaction Flow</h3>
+  <div class="mermaid-wrap">
+    <div class="mermaid">
+flowchart TD
+    A([Child taps canvas]) --> B{Find nearest zone\nwithin 80px snap radius}
+    B -->|Zone found| C[Get zone ID]
+    B -->|No zone found| D[🫨 Canvas shake animation\nNo error message — try again naturally]
+    C --> E{Coloring mode?}
+    E -->|Guided Mode default| F["Look up COLOR_MAPS[motif][zoneId]\nHistorically accurate pigment"]
+    E -->|Free Mode| G[Use child's selected\npalette color]
+    F --> H[Flood fill zone\nspread animation 400ms ease-out]
+    G --> H
+    H --> I[Brief palette highlight\nshows which color was applied]
+    I --> J[Play fill sound]
+    J --> K{All zones filled?}
+    K -->|Yes| L[✅ Show Xong / Done button]
+    K -->|No| M[Wait for next tap]
+    D --> M
+
+    style D fill:#EDE8D8,stroke:#8B6340
+    style L fill:#4A7C59,color:#EDE8D8,stroke:#2d5038
+    </div>
+    <p class="diagram-caption">Fig 3 — Complete coloring interaction decision tree including zone snap and mode branching.</p>
+  </div>
+
+  <h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;margin:36px 0 12px">Traditional Color Map (Pig — Lợn)</h3>
+  <div style="overflow-x:auto">
+    <table style="width:100%;border-collapse:collapse;font-size:0.82rem;margin-top:8px">
+      <thead>
+        <tr style="background:var(--ink-black);color:var(--pigment-white)">
+          <th style="padding:10px 14px;text-align:left;font-weight:600">Zone ID</th>
+          <th style="padding:10px 14px;text-align:left;font-weight:600">Zone Name</th>
+          <th style="padding:10px 14px;text-align:left;font-weight:600">Color</th>
+          <th style="padding:10px 14px;text-align:left;font-weight:600">Pigment (Vietnamese)</th>
+          <th style="padding:10px 14px;text-align:left;font-weight:600">Hex</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:var(--surface-paper)"><td style="padding:8px 14px">body</td><td style="padding:8px 14px">Body</td><td style="padding:8px 14px"><span style="display:inline-block;width:16px;height:16px;background:#EDE8D8;border:2px solid #1A1008;border-radius:3px;vertical-align:middle;margin-right:6px"></span>White gypsum</td><td style="padding:8px 14px">Trắng thạch cao</td><td style="padding:8px 14px;font-family:monospace">#EDE8D8</td></tr>
+        <tr><td style="padding:8px 14px">ear-left, ear-right</td><td style="padding:8px 14px">Ears</td><td style="padding:8px 14px"><span style="display:inline-block;width:16px;height:16px;background:#B5300A;border:2px solid #1A1008;border-radius:3px;vertical-align:middle;margin-right:6px"></span>Vermilion</td><td style="padding:8px 14px">Son đỏ</td><td style="padding:8px 14px;font-family:monospace">#B5300A</td></tr>
+        <tr style="background:var(--surface-paper)"><td style="padding:8px 14px">eye-left, eye-right</td><td style="padding:8px 14px">Eyes</td><td style="padding:8px 14px"><span style="display:inline-block;width:16px;height:16px;background:#1A1008;border:2px solid #1A1008;border-radius:3px;vertical-align:middle;margin-right:6px"></span>Chinese ink</td><td style="padding:8px 14px">Mực tàu</td><td style="padding:8px 14px;font-family:monospace">#1A1008</td></tr>
+        <tr><td style="padding:8px 14px">snout</td><td style="padding:8px 14px">Snout</td><td style="padding:8px 14px"><span style="display:inline-block;width:16px;height:16px;background:#B5300A;border:2px solid #1A1008;border-radius:3px;vertical-align:middle;margin-right:6px"></span>Vermilion</td><td style="padding:8px 14px">Son đỏ</td><td style="padding:8px 14px;font-family:monospace">#B5300A</td></tr>
+        <tr style="background:var(--surface-paper)"><td style="padding:8px 14px">tail</td><td style="padding:8px 14px">Tail</td><td style="padding:8px 14px"><span style="display:inline-block;width:16px;height:16px;background:#B5300A;border:2px solid #1A1008;border-radius:3px;vertical-align:middle;margin-right:6px"></span>Vermilion</td><td style="padding:8px 14px">Son đỏ</td><td style="padding:8px 14px;font-family:monospace">#B5300A</td></tr>
+        <tr><td style="padding:8px 14px">leg-1 through leg-4</td><td style="padding:8px 14px">Legs</td><td style="padding:8px 14px"><span style="display:inline-block;width:16px;height:16px;background:#2C3E6E;border:2px solid #1A1008;border-radius:3px;vertical-align:middle;margin-right:6px"></span>Indigo</td><td style="padding:8px 14px">Chàm</td><td style="padding:8px 14px;font-family:monospace">#2C3E6E</td></tr>
+        <tr style="background:var(--surface-paper)"><td style="padding:8px 14px">belly-spot</td><td style="padding:8px 14px">Belly</td><td style="padding:8px 14px"><span style="display:inline-block;width:16px;height:16px;background:#D4A017;border:2px solid #1A1008;border-radius:3px;vertical-align:middle;margin-right:6px"></span>Gardenia yellow</td><td style="padding:8px 14px">Vàng hoa dành dành</td><td style="padding:8px 14px;font-family:monospace">#D4A017</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     ACCESSIBILITY
+════════════════════════════════════════════════════════════ -->
+<section class="section" id="accessibility">
+  <div class="section-eyebrow">Inclusive Design</div>
+  <h2 class="section-title">Accessibility Commitments</h2>
+  <p class="section-lead">Every constraint in this app is an accessibility decision. These are non-negotiable requirements, not polish.</p>
+
+  <div class="a11y-grid">
+    <div class="a11y-card">
+      <div class="a11y-icon">👆</div>
+      <h4>Tap Only — No Drag</h4>
+      <p>Zero drag interactions anywhere in the app. Children with tremors or limited grip cannot reliably drag. One physical gesture = one creative action.</p>
+    </div>
+    <div class="a11y-card">
+      <div class="a11y-icon">📏</div>
+      <h4>80px Minimum Tap Targets</h4>
+      <p>Every tappable element is at least 80×80px. Most are significantly larger (the stamp canvas is the entire screen). Enforced in every component.</p>
+    </div>
+    <div class="a11y-card">
+      <div class="a11y-icon">⏱️</div>
+      <h4>No Time Pressure</h4>
+      <p>No countdowns, no timeouts, no loading bars that run out. The child can take as long as they need on every screen.</p>
+    </div>
+    <div class="a11y-card">
+      <div class="a11y-icon">✅</div>
+      <h4>Every Tap Produces a Result</h4>
+      <p>Nothing silently fails. A tap on a zone produces a fill. A miss produces a shake. The stamp tap produces an animation. Failure is always soft and visual.</p>
+    </div>
+    <div class="a11y-card">
+      <div class="a11y-icon">🎨</div>
+      <h4>Color + Shape, Never Color Alone</h4>
+      <p>No information is conveyed by color only. Every color swatch has a Vietnamese label. Every zone has a shape. Text contrast ≥ 4.5:1 on all backgrounds.</p>
+    </div>
+    <div class="a11y-card">
+      <div class="a11y-icon">🇻🇳</div>
+      <h4>Bilingual (Vietnamese + English)</h4>
+      <p>Every user-facing string has Vietnamese primary label and English secondary. Uses Be Vietnam Pro — the only major sans-serif optimized for Vietnamese diacritics.</p>
+    </div>
+    <div class="a11y-card">
+      <div class="a11y-icon">↩️</div>
+      <h4>Undo Always Visible</h4>
+      <p>One large undo button, always visible during coloring. Maintains a stack of zone fills. Children can explore without fear of ruining their work.</p>
+    </div>
+    <div class="a11y-card">
+      <div class="a11y-icon">✨</div>
+      <h4>Reduced Motion Support</h4>
+      <p>All animations respect <code>prefers-reduced-motion</code>. When enabled, transitions collapse to instant state changes. No flashing or strobing effects anywhere.</p>
+    </div>
+    <div class="a11y-card">
+      <div class="a11y-icon">🏆</div>
+      <h4>Success Is Guaranteed</h4>
+      <p>Guided Mode's color suggestions ensure every child produces an authentically Kim Hoàng painting — regardless of color knowledge or decision-making ability.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     TECH ARCHITECTURE
+════════════════════════════════════════════════════════════ -->
+<section class="section" id="tech">
+  <div class="section-eyebrow">Technical</div>
+  <h2 class="section-title">Architecture &amp; Tech Stack</h2>
+  <p class="section-lead">Client-side only. No backend, no API calls, no authentication. Runs in any modern browser.</p>
+
+  <div class="tech-chips">
+    <span class="tech-chip">React 18</span>
+    <span class="tech-chip">TypeScript</span>
+    <span class="tech-chip">Vite</span>
+    <span class="tech-chip">react-router-dom v6</span>
+    <span class="tech-chip">zustand</span>
+    <span class="tech-chip">framer-motion</span>
+    <span class="tech-chip">konva + react-konva</span>
+    <span class="tech-chip">html2canvas</span>
+    <span class="tech-chip light">No backend</span>
+    <span class="tech-chip light">No API calls</span>
+    <span class="tech-chip light">No app store</span>
+  </div>
+
+  <div class="mermaid-wrap">
+    <div class="mermaid">
+graph TD
+    App["App.tsx\n(Router + Global State)"]
+
+    subgraph Screens
+        S1[HomeScreen]
+        S2[PaperScreen]
+        S3[MotifScreen]
+        S4[StampScreen]
+        S5[ColorScreen]
+        S6[PoemScreen]
+        S7[DoneScreen]
+    end
+
+    subgraph Components
+        BTN[Button.tsx]
+        CARD[Card.tsx]
+        SWATCH[ColorSwatch.tsx]
+        ML[MotifLayer.tsx\nSVG zones + tap events]
+        DOTS[ProgressDots.tsx]
+    end
+
+    subgraph Data
+        CM[colorMaps.ts\nPIG_COLOR_MAP etc.]
+        ZONES[zones.ts\nzone centers + snap radii]
+        PAL[palette.ts\nKim Hoàng constants]
+    end
+
+    subgraph Utils
+        ZS[zoneSnap.ts\nfindTargetZone]
+        ANI[animations.ts\nframer-motion configs]
+        EXP[canvasExport.ts\nPNG download]
+    end
+
+    Store["useAppStore.ts\n(Zustand)\npaperColor · motif · stamped\ncolorMap · poem · colorMode"]
+
+    App --> Screens
+    S4 --> ML
+    S5 --> ML
+    S5 --> SWATCH
+    S6 --> ML
+
+    ML --> ZS
+    ML --> CM
+    ZS --> ZONES
+    S7 --> EXP
+
+    Store --- S2
+    Store --- S3
+    Store --- S4
+    Store --- S5
+    Store --- S6
+    Store --- S7
+
+    style Store fill:#C13B2A,color:#EDE8D8,stroke:#8B2419
+    style App   fill:#1A1008,color:#EDE8D8,stroke:#1A1008
+    </div>
+    <p class="diagram-caption">Fig 4 — Component and data architecture. Zustand store is the single source of truth shared across all screens.</p>
+  </div>
+
+  <div class="callout indigo mt-24">
+    <strong>No TypeScript <code>any</code>.</strong> The codebase enforces strict TypeScript throughout. All zone IDs, motif names, paper colors, and poem characters are typed as union literals — no magic strings.
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     MVP SCOPE & PHASES
+════════════════════════════════════════════════════════════ -->
+<section class="section" id="scope">
+  <div class="section-eyebrow">Build Plan</div>
+  <h2 class="section-title">MVP Scope &amp; Phasing</h2>
+  <p class="section-lead">9 phases in dependency order. Each phase is independently demoable before moving on.</p>
+
+  <div class="mermaid-wrap">
+    <div class="mermaid">
+flowchart LR
+    P1["Phase 1\nFoundation\nRouting · Store · Tokens"] --> P2["Phase 2\nCore Components\nButton · Card · Swatch"]
+    P2 --> P3["Phase 3\nScreens 1–3\nHome · Paper · Motif"]
+    P3 --> P4["Phase 4\nPig SVG\nZoned · Kim Hoàng style"]
+    P4 --> P5["Phase 5\nStamp Screen\nInk-draw animation"]
+    P5 --> P6["Phase 6\nColor Screen\nZone snap · Fill · Undo"]
+    P6 --> P7["Phase 7\nPoem + Done\nConfetti · PNG export"]
+    P7 --> P8["Phase 8\nPolish\nTexture · Sound · a11y"]
+    P8 --> P9["Phase 9\nDocs\nREADME · Research · JSDoc"]
+
+    style P4 fill:#C13B2A,color:#EDE8D8,stroke:#8B2419
+    style P6 fill:#C13B2A,color:#EDE8D8,stroke:#8B2419
+    </div>
+    <p class="diagram-caption">Fig 5 — Build phases in dependency order. Red = highest-risk phases (SVG asset + core coloring UX).</p>
+  </div>
+
+  <div class="phases mt-32">
+    <div class="phase-row">
+      <div>
+        <div class="phase-label">Phase 1</div>
+      </div>
+      <div>
+        <div class="phase-title">Foundation</div>
+        <div class="phase-desc">CSS tokens, Zustand store, react-router-dom routing, all 7 screen stubs. Verification: all routes load, no errors.</div>
+      </div>
+      <div><span class="phase-status core">Core</span></div>
+    </div>
+    <div class="phase-row">
+      <div>
+        <div class="phase-label">Phase 2</div>
+      </div>
+      <div>
+        <div class="phase-title">Core Components</div>
+        <div class="phase-desc">Button, Card, ColorSwatch, ProgressDots — all with accessibility props and framer-motion animations.</div>
+      </div>
+      <div><span class="phase-status core">Core</span></div>
+    </div>
+    <div class="phase-row">
+      <div>
+        <div class="phase-label">Phase 3</div>
+      </div>
+      <div>
+        <div class="phase-title">Screens 1–3</div>
+        <div class="phase-desc">Home, Paper selection, Motif selection — fully functional. First demoable milestone.</div>
+      </div>
+      <div><span class="phase-status core">Core</span></div>
+    </div>
+    <div class="phase-row">
+      <div>
+        <div class="phase-label">Phase 4</div>
+      </div>
+      <div>
+        <div class="phase-title">Pig SVG (Critical Asset)</div>
+        <div class="phase-desc">Kim Hoàng-style pig SVG with 12 individually-ID'd zones matching PIG_COLOR_MAP. Zone center coordinates measured for snap logic.</div>
+      </div>
+      <div><span class="phase-status core">Core · High Risk</span></div>
+    </div>
+    <div class="phase-row">
+      <div>
+        <div class="phase-label">Phase 5</div>
+      </div>
+      <div>
+        <div class="phase-title">Stamp Screen</div>
+        <div class="phase-desc">Full tap-to-stamp with SVG pathLength ink-draw animation (50ms stagger per path). Auto-advance after 1200ms.</div>
+      </div>
+      <div><span class="phase-status feature">Feature</span></div>
+    </div>
+    <div class="phase-row">
+      <div>
+        <div class="phase-label">Phase 6</div>
+      </div>
+      <div>
+        <div class="phase-title">Color Screen</div>
+        <div class="phase-desc">Zone snap, Guided + Free modes, fill animation, undo stack, completion detection. Core UX of the app.</div>
+      </div>
+      <div><span class="phase-status feature">Feature · High Risk</span></div>
+    </div>
+    <div class="phase-row">
+      <div>
+        <div class="phase-label">Phase 7</div>
+      </div>
+      <div>
+        <div class="phase-title">Poem + Done</div>
+        <div class="phase-desc">Calligraphy animation, confetti, PNG export via html2canvas. Full end-to-end flow complete.</div>
+      </div>
+      <div><span class="phase-status feature">Feature</span></div>
+    </div>
+    <div class="phase-row">
+      <div>
+        <div class="phase-label">Phase 8</div>
+      </div>
+      <div>
+        <div class="phase-title">Polish</div>
+        <div class="phase-desc">Paper grain texture, optional sound effects with caregiver toggle, prefers-reduced-motion, responsive testing (375px / 768px / 1024px).</div>
+      </div>
+      <div><span class="phase-status polish">Polish</span></div>
+    </div>
+    <div class="phase-row">
+      <div>
+        <div class="phase-label">Phase 9</div>
+      </div>
+      <div>
+        <div class="phase-title">Documentation</div>
+        <div class="phase-desc">RESEARCH.md, README.md, component JSDoc comments explaining every accessibility decision for portfolio evaluators.</div>
+      </div>
+      <div><span class="phase-status docs">Docs</span></div>
+    </div>
+  </div>
+
+  <div class="callout green mt-32">
+    <strong>MVP Definition of Done:</strong> All 7 screens navigable · Pig motif stamp → color → poem → save working end-to-end · 
+    Zone snapping functional · Save produces a real PNG file · Loads on mobile Chrome/Safari without errors.
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     REFERENCES
+════════════════════════════════════════════════════════════ -->
+<section class="section" id="references">
+  <div class="section-eyebrow">Sources</div>
+  <h2 class="section-title">References &amp; Further Reading</h2>
+
+  <ul class="ref-list">
+    <li>
+      <span class="ref-type">Cultural · Primary Reference</span>
+      <a href="https://en.wikipedia.org/wiki/Kim_Ho%C3%A0ng_painting" target="_blank">Wikipedia — Kim Hoàng Painting</a>
+      — History, technique, motifs, near-extinction, and 2015 restoration. Starting point for all cultural research.
+    </li>
+    <li>
+      <span class="ref-type">Cultural · Museum</span>
+      <a href="https://baotangmythuatvietnam.vn/en" target="_blank">Vietnam Fine Arts Museum (Bảo tàng Mỹ thuật Việt Nam)</a>
+      — Holds original Kim Hoàng works. Authentic reference for motif style, proportions, and color palette.
+    </li>
+    <li>
+      <span class="ref-type">Cultural · Article</span>
+      <a href="https://artsandculture.google.com/story/the-revival-of-kim-ho-ng-folk-paintings/gQWB7hWjvuXLLQ" target="_blank">Google Arts &amp; Culture — Revival of Kim Hoàng Folk Paintings</a>
+      — Documents Nguyễn Thị Thu Hoa's restoration work and surviving painting catalog.
+    </li>
+    <li>
+      <span class="ref-type">Cultural · Tourism</span>
+      <a href="https://vietnamtourism.gov.vn/en/post/13952" target="_blank">Vietnam National Administration of Tourism — Kim Hoàng Village</a>
+      — Village location, artisan context, and cultural significance for Tết.
+    </li>
+    <li>
+      <span class="ref-type">Accessibility · Global Report</span>
+      <a href="https://www.who.int/publications/i/item/9789240049451" target="_blank">WHO — Global Report on Assistive Technology (2022)</a>
+      — Motor disability prevalence statistics and assistive design principles for children.
+    </li>
+    <li>
+      <span class="ref-type">Accessibility · Framework</span>
+      <a href="https://www.cast.org/impact/universal-design-for-learning-udl" target="_blank">CAST — Universal Design for Learning (UDL) Framework</a>
+      — Principles for multiple means of action and expression. Grounds the tap-only interaction model.
+    </li>
+    <li>
+      <span class="ref-type">Accessibility · Guidelines</span>
+      <a href="https://www.unicef.org/reports/designing-with-children-disabilities" target="_blank">UNICEF — Designing for Children with Disabilities</a>
+      — Specific design guidelines for motor-impaired children aged 5–10.
+    </li>
+    <li>
+      <span class="ref-type">Technical · Animation</span>
+      <a href="https://www.framer.com/motion/" target="_blank">Framer Motion Documentation</a>
+      — Spring physics, pathLength, whileTap. Used for all interactive animations in the app.
+    </li>
+    <li>
+      <span class="ref-type">Technical · Canvas</span>
+      <a href="https://konvajs.org/docs/react/" target="_blank">React Konva Documentation</a>
+      — Canvas-based zone rendering and tap event handling.
+    </li>
+    <li>
+      <span class="ref-type">Technical · Export</span>
+      <a href="https://html2canvas.hertzen.com/" target="_blank">html2canvas</a>
+      — DOM-to-canvas rendering used for PNG export of the final painting.
+    </li>
+  </ul>
+</section>
+
+</div><!-- /main-wrap -->
+
+<footer class="footer">
+  <strong>Tranh Kim Hoàng Drawing App</strong> · Stakeholder Review v0.1 · June 2026<br>
+  High School Portfolio Project · React + TypeScript · Client-side only · No backend<br>
+  <span style="font-family:'Ma Shan Zheng',cursive;font-size:1.2rem;color:var(--pigment-yellow);letter-spacing:0.1em">福 祿 壽</span>
+</footer>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'base',
+    themeVariables: {
+      primaryColor:       '#EDE8D8',
+      primaryTextColor:   '#1A1008',
+      primaryBorderColor: '#1A1008',
+      lineColor:          '#1A1008',
+      secondaryColor:     '#F5EDD8',
+      tertiaryColor:      '#C89A1A',
+      background:         '#F5EDD8',
+      mainBkg:            '#EDE8D8',
+      nodeBorder:         '#1A1008',
+      clusterBkg:         '#F5EDD8',
+      clusterBorder:      '#8B6340',
+      titleColor:         '#1A1008',
+      edgeLabelBackground:'#F5EDD8',
+      fontFamily:         "'Be Vietnam Pro', sans-serif",
+      fontSize:           '13px',
+    },
+    flowchart: { curve: 'basis', htmlLabels: true },
+    stateDiagram: { diagramPadding: 20 },
+  });
+</script>
+</body>
+</html>

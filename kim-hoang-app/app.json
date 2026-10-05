@@ -1,0 +1,51 @@
+{
+  "expo": {
+    "name": "Tranh Kim Hoàng",
+    "slug": "kim-hoang-app",
+    "version": "1.0.0",
+    "orientation": "default",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.donkhoanguyen.kimhoang",
+      "infoPlist": {
+        "NSPhotoLibraryAddUsageDescription": "Lưu tranh của bạn vào thư viện ảnh. / Save your painting to your photo library."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#C13B2A",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#C13B2A",
+          "imageWidth": 200
+        }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Lưu tranh của bạn vào thư viện ảnh. / Save your painting to your photo library.",
+          "savePhotosPermission": "Lưu tranh của bạn vào thư viện ảnh. / Save your painting to your photo library."
+        }
+      ],
+      "expo-sharing",
+      "expo-status-bar",
+      "expo-asset"
+    ]
+  }
+}
