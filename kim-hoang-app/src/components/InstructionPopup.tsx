@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -8,7 +8,8 @@ import Animated, {
 } from 'react-native-reanimated';
 import * as Haptics from 'expo-haptics';
 
-import { STEP_GUIDES, type GuideId } from '../data/stepGuides';
+import { STEP_GUIDES, type GuideId, type GuideLang } from '../data/stepGuides';
+import { useAppStore } from '../store/useAppStore';
 import { Colors, FontSize, Fonts, LineHeight, Radius, Spacing } from '../theme/tokens';
 import { Button } from './Button';
 import { PaperTexture } from './texture/PaperTexture';
@@ -22,8 +23,9 @@ interface InstructionPopupProps {
 }
 
 /**
- * Full-screen instruction card in Vietnamese — paper sheet on ink wash,
- * chu-sa seal with the step number. Blocks the step until the child taps through.
+ * Full-screen instruction card — paper sheet on ink wash, chu-sa seal
+ * with the step number. One language at a time: stacking Việt + English
+ * on Color / Carve / Poem overflows a phone sheet. Choice sticks across stages.
  */
 export function InstructionPopup({
   guideId,
@@ -32,6 +34,8 @@ export function InstructionPopup({
   coverInset,
 }: InstructionPopupProps) {
   const guide = STEP_GUIDES[guideId];
+  const lang = useAppStore((s) => s.guideLang);
+  const setGuideLang = useAppStore((s) => s.setGuideLang);
   const opacity = useSharedValue(0);
   const lift = useSharedValue(18);
 
@@ -52,6 +56,18 @@ export function InstructionPopup({
   }));
 
   if (!visible) return null;
+
+  const isVi = lang === 'vi';
+  const title = isVi ? guide.titleVi : guide.titleEn;
+  const lines = isVi ? guide.linesVi : guide.linesEn;
+  const cta = isVi ? guide.ctaVi : guide.ctaEn;
+  const eyebrow = isVi ? 'Hướng dẫn' : 'How to';
+
+  const pickLang = (next: GuideLang) => {
+    if (next === lang) return;
+    void Haptics.selectionAsync();
+    setGuideLang(next);
+  };
 
   return (
     <View
@@ -75,18 +91,22 @@ export function InstructionPopup({
         <View style={styles.seal}>
           <Text style={styles.sealText}>{guide.step}</Text>
         </View>
-        <Text style={styles.eyebrow}>Hướng dẫn</Text>
-        <Text style={styles.title}>{guide.title}</Text>
+        <View style={styles.langRow}>
+          <LangChip label="Việt" selected={isVi} onPress={() => pickLang('vi')} />
+          <LangChip label="English" selected={!isVi} onPress={() => pickLang('en')} />
+        </View>
+        <Text style={styles.eyebrow}>{eyebrow}</Text>
+        <Text style={styles.title}>{title}</Text>
         <View style={styles.rule} />
-        {guide.lines.map((line) => (
+        {lines.map((line) => (
           <Text key={line} style={styles.line}>
             {line}
           </Text>
         ))}
         <View style={styles.cta}>
           <Button
-            labelVi={guide.cta}
-            accessibilityLabel={guide.cta}
+            labelVi={cta}
+            accessibilityLabel={`${guide.ctaVi} / ${guide.ctaEn}`}
             onPress={() => {
               void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               onDismiss();
@@ -95,6 +115,29 @@ export function InstructionPopup({
         </View>
       </Animated.View>
     </View>
+  );
+}
+
+function LangChip({
+  label,
+  selected,
+  onPress,
+}: {
+  label: string;
+  selected: boolean;
+  onPress: () => void;
+}) {
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityState={{ selected }}
+      accessibilityLabel={label}
+      hitSlop={Spacing.sm}
+      onPress={onPress}
+      style={[styles.chip, selected ? styles.chipOn : styles.chipOff]}
+    >
+      <Text style={[styles.chipText, selected ? styles.chipTextOn : styles.chipTextOff]}>{label}</Text>
+    </Pressable>
   );
 }
 
@@ -147,6 +190,36 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.bodySemiBold,
     fontSize: FontSize.heading,
     color: Colors.pigmentWhite,
+  },
+  langRow: {
+    flexDirection: 'row',
+    gap: Spacing.sm,
+    marginBottom: Spacing.md,
+    zIndex: 1,
+    paddingRight: 52,
+  },
+  chip: {
+    borderWidth: 2,
+    borderColor: Colors.inkBlack,
+    borderRadius: Radius.sm,
+    paddingVertical: Spacing.xs,
+    paddingHorizontal: Spacing.md,
+  },
+  chipOn: {
+    backgroundColor: Colors.inkBlack,
+  },
+  chipOff: {
+    backgroundColor: 'transparent',
+  },
+  chipText: {
+    fontFamily: Fonts.bodySemiBold,
+    fontSize: FontSize.small,
+  },
+  chipTextOn: {
+    color: Colors.pigmentWhite,
+  },
+  chipTextOff: {
+    color: Colors.inkBlack,
   },
   eyebrow: {
     fontFamily: Fonts.body,

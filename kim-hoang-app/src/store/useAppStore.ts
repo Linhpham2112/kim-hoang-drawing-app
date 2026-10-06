@@ -3,7 +3,7 @@ import { create } from 'zustand';
 import { PALETTE } from '../data/palette';
 import { PIG_INK_ORDER, type PigInkId } from '../data/pigInk';
 import { ROOSTER_INK_ORDER, type RoosterInkId } from '../data/roosterInk';
-import { type GuideId } from '../data/stepGuides';
+import { type GuideId, type GuideLang } from '../data/stepGuides';
 import { DEFAULT_POEM_POS, DEFAULT_PRINT_POS } from '../utils/rect';
 
 export type Motif = 'pig' | 'rooster' | 'custom';
@@ -33,6 +33,8 @@ interface AppState {
   currentStep: AppStep;
   selectedColor: string | null;
   soundEnabled: boolean;
+  /** Instruction cards: one language at a time. Stacking Việt + English overflows the sheet. */
+  guideLang: GuideLang;
   seenGuides: Partial<Record<GuideId, boolean>>;
 
   setMotif: (motif: Motif) => void;
@@ -50,6 +52,7 @@ interface AppState {
   setPoemPos: (pos: { nx: number; ny: number }) => void;
   setSelectedColor: (color: string | null) => void;
   setSoundEnabled: (enabled: boolean) => void;
+  setGuideLang: (lang: GuideLang) => void;
   setCurrentStep: (step: AppStep) => void;
   markGuideSeen: (id: GuideId) => void;
   reset: () => void;
@@ -71,6 +74,7 @@ const initialState = {
   currentStep: 1 as AppStep,
   selectedColor: PALETTE.red as string | null,
   soundEnabled: true,
+  guideLang: 'vi' as GuideLang,
   seenGuides: {} as Partial<Record<GuideId, boolean>>,
 };
 
@@ -162,10 +166,12 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   setSoundEnabled: (soundEnabled) => set({ soundEnabled }),
 
+  setGuideLang: (guideLang) => set({ guideLang }),
+
   setCurrentStep: (currentStep) => set({ currentStep }),
 
   markGuideSeen: (id) =>
     set((s) => ({ seenGuides: { ...s.seenGuides, [id]: true } })),
 
-  reset: () => set({ ...initialState }),
+  reset: () => set({ ...initialState, guideLang: get().guideLang }),
 }));
